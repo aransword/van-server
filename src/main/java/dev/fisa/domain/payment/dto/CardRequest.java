@@ -1,20 +1,17 @@
 package dev.fisa.domain.payment.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import lombok.Builder;
 
 @Builder
-public record VanResponse(
+public record CardRequest(
     String transactionId,
-    String approvalNumber,
-    String responseCode,
-    String message,
+    String cardNumber,
     BigDecimal amount,
-    LocalDateTime authorizationDate,
-    boolean approved
+    String merchantId,
+    String terminalId
 ) {
-    public static CardRequest from(AuthorizationRequest request) {
+    public static CardRequest from(VanRequest request) {
         return CardRequest.builder()
                           .transactionId(request.transactionId())
                           .cardNumber(request.cardNumber())
