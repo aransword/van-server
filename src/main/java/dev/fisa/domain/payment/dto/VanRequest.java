@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Builder
-public record VanRequest(byte[] rawIsoMessage) {
+public record VanRequest(
+    byte[] rawIsoMessage
+) {
 
 }

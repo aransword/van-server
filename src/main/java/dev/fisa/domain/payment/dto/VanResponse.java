@@ -14,13 +14,16 @@ public record VanResponse(
     LocalDateTime authorizationDate,
     boolean approved
 ) {
-    public static CardRequest from(AuthorizationRequest request) {
-        return CardRequest.builder()
-                          .transactionId(request.transactionId())
-                          .cardNumber(request.cardNumber())
-                          .amount(request.amount())
-                          .merchantId(request.merchantId())
-                          .terminalId(request.terminalId())
+
+    public static VanResponse from(CardAuthResponse cardResponse) {
+        return VanResponse.builder()
+                          .transactionId(cardResponse.transactionId())
+                          .approvalNumber(cardResponse.approvalNumber())
+                          .responseCode(cardResponse.responseCode())
+                          .message(cardResponse.message())
+                          .amount(cardResponse.amount())
+                          .authorizationDate(cardResponse.authorizationDate())
+                          .approved(cardResponse.approved())
                           .build();
     }
 }
