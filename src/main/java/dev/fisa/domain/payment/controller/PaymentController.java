@@ -1,4 +1,4 @@
-package dev.fisa.payment.controller;
+package dev.fisa.domain.payment.controller;
 
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.MessageFactory;
