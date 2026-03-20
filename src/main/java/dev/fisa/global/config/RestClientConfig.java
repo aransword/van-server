@@ -11,10 +11,18 @@ public class RestClientConfig {
     @Value("${card-auth.base-url}")
     private String baseUrl;
 
+    @Value("${card-auth.username}")
+    private String username;
+
+    @Value("${card-auth.password}")
+    private String password;
+
     @Bean
     public RestClient cardAuthRestClient() {
         return RestClient.builder()
                          .baseUrl(baseUrl)
+                         .defaultHeaders(headers ->
+                             headers.setBasicAuth(username, password))
                          .build();
     }
 }
