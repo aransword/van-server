@@ -3,6 +3,7 @@ package dev.fisa.domain.payment.controller;
 import com.solab.iso8583.IsoMessage;
 import com.solab.iso8583.MessageFactory;
 import com.solab.iso8583.parse.ConfigParser;
+import dev.fisa.domain.payment.dto.VanRequest;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.net.http.HttpRequest;
 import java.nio.charset.StandardCharsets;
 
@@ -30,9 +32,10 @@ public class PaymentController {
     }
 
     @PostMapping("/van")
-    public ResponseEntity<?> postVANInfo(@RequestBody String rawIsoMessage) {
+    public ResponseEntity<?> postVANInfo(@RequestBody VanRequest vanRequest) {
         try {
-            byte[] messageBytes = rawIsoMessage.getBytes(StandardCharsets.UTF_8);
+
+            byte[] messageBytes = vanRequest.rawIsoMessage();
 
             IsoMessage parsedMsg = messageFactory.parseMessage(messageBytes, 0);
 
@@ -41,17 +44,11 @@ public class PaymentController {
             }
 
             String cardNumber = parsedMsg.hasField(2) ? parsedMsg.getObjectValue(2).toString() : null;
-            System.out.println("cardNumber = " + cardNumber);
-
-            String amount = parsedMsg.hasField(4) ? parsedMsg.getObjectValue(4).toString() : null;
-            System.out.println("amount = " + amount);
+            BigDecimal amount = parsedMsg.hasField(4) ? new BigDecimal(parsedMsg.getObjectValue(4).toString()) : BigDecimal.ZERO;;
             String transactionId = parsedMsg.hasField(37) ? parsedMsg.getObjectValue(37).toString() : null;
-            System.out.println("transactionId = " + transactionId);
-            // ALPHA 타입은 우측 공백 패딩이 들어가므로 반드시 trim()을 해줍니다.
             String terminalId = parsedMsg.hasField(41) ? parsedMsg.getObjectValue(41).toString().trim() : null;
-            System.out.println("terminalId = " + terminalId);
             String merchantId = parsedMsg.hasField(42) ? parsedMsg.getObjectValue(42).toString().trim() : null;
-            System.out.println("merchantId = " + merchantId);
+
 
         } catch (Exception e) {
             e.printStackTrace();
