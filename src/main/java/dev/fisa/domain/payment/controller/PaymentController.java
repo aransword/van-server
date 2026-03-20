@@ -6,7 +6,7 @@ import com.solab.iso8583.parse.ConfigParser;
 import dev.fisa.domain.payment.dto.AuthorizationRequest;
 import dev.fisa.domain.payment.dto.VanRequest;
 import dev.fisa.domain.payment.dto.VanResponse;
-import dev.fisa.domain.payment.service.CardClientService;
+import dev.fisa.domain.payment.service.PaymentService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 public class PaymentController {
 
-    private final CardClientService cardClientService;
+    private final PaymentService paymentService;
     private MessageFactory<IsoMessage> messageFactory;
 
     @PostConstruct
@@ -55,7 +55,7 @@ public class PaymentController {
             AuthorizationRequest authRequest = AuthorizationRequest.from(
                 cardNumber, amount, transactionId, terminalId, merchantId);
 
-            VanResponse response = cardClientService.requestAuthorization(authRequest);
+            VanResponse response = paymentService.processPayment(authRequest);
 
             return ResponseEntity.ok(response);
 

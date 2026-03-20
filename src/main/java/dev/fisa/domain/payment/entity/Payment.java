@@ -6,7 +6,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,4 +36,13 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+
+    public void complete() {
+        this.status = Status.COMPLETED;
+    }
+
+    public void fail() {
+        this.status = Status.FAILED;
+    }
 }

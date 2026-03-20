@@ -1,3 +1,25 @@
+server:
+  port: 8083
+
 spring:
   application:
     name: van-server
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/van_db?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: root
+    password: jiwon0126
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+card-auth:
+  base-url: http://localhost:9090
+  username: card
+  password: card123
