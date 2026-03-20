@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE j8583-config PUBLIC "-//J8583//DTD CONFIG 1.0//EN" "http://j8583.sourceforge.net/j8583.dtd">
+<j8583-config>
+    <parse type="0200">
+        <field num="2" type="LLVAR" />
+        <field num="4" type="AMOUNT" />
+        <field num="37" type="NUMERIC" length="6" />
+        <field num="41" type="ALPHA" length="8" />
+        <field num="42" type="ALPHA" length="15" />
+    </parse>
+</j8583-config>
