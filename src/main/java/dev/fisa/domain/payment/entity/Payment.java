@@ -37,4 +37,13 @@ public class Payment {
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+
+    public void complete() {
+        this.status = Status.COMPLETED;
+    }
+
+    public void fail() {
+        this.status = Status.FAILED;
+    }
 }
